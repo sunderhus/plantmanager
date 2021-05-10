@@ -4,7 +4,7 @@
 <hr>
 
 <h1 align="center">
-    Bootcamp NLW#5
+    Bootcamp NLW#5 <br>
   <img alt="Plant Manager App" title="Plant Manager App" src=".github/mock01.png" />
 
 </h1>
