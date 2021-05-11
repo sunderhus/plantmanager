@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text } from 'react-native';
+import Icon from 'react-native-vector-icons/Entypo';
 import wateringImage from '../../assets/watering.png';
+import colors from '../../styles/colors';
 import {
   Container,
   NextPageButton,
-  NextPageButtonText,
   SubTitle,
   Title,
   WateringImage,
@@ -13,16 +13,16 @@ import {
 const Wellcome: React.FC = () => (
   <Container>
     <Title>
-      Gerencie {'\n'}suas plantas {'\n'}de forma fácil
+      Gerencie {'\n'}suas plantas de {'\n'} forma fácil
     </Title>
-    <WateringImage source={wateringImage} />
+    <WateringImage resizeMode="contain" source={wateringImage} />
 
     <SubTitle>
       Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
       sempre que precisar.
     </SubTitle>
     <NextPageButton activeOpacity={0.7}>
-      <NextPageButtonText> Avançar </NextPageButtonText>
+      <Icon name="chevron-right" color={colors.white} size={24} />
     </NextPageButton>
   </Container>
 );

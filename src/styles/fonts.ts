@@ -1,0 +1,27 @@
+export default {
+  family: {
+    Jost: {
+      Black: 'Jost-Black',
+      BlackItalic: 'Jost-BlackItalic',
+      Bold: 'Jost-Bold',
+      BoldItalic: 'Jost-BoldItalic',
+      ExtraBold: 'Jost-ExtraBold',
+      ExtraBoldItalic: 'Jost-ExtraBoldItalic',
+      Light: 'Jost-Light',
+      LightItalic: 'Jost-LightItalic',
+      ExtraLight: 'Jost-ExtraLight',
+      ExtraLightItalic: 'Jost-ExtraLightItalic',
+      Italic: 'Jost-Italic',
+      Medium: 'Jost-Medium',
+      MediumItalic: 'Jost-MediumItalic',
+      Regular: 'Jost-Regular',
+      SemiBold: 'Jost-SemiBold',
+      SemiBoldItalic: 'Jost-SemiBoldItalic',
+      Thin: 'Jost-Thin',
+      ThinItalic: 'Jost-ThinItalic',
+    },
+  },
+  heading: 'Jost-SemiBold',
+  text: 'Jost-Regular',
+  complement: 'Jost-Regular',
+};
