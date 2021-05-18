@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import EnviromentButton from '../../components/EnviromentButton';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 import PlantCard from '../../components/PlantCard';
 import api from '../../services/api';
+import colors from '../../styles/colors';
 import {
   Container,
   Enviroments,
@@ -34,39 +36,83 @@ export interface IEnviroment {
 }
 
 const PlantSelection: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [page, setPage] = useState(1);
   const [enviroments, setEnviroments] = useState<IEnviroment[]>([]);
+  const [selectedEnviroment, setSelectedEnviroment] = useState<string>('all');
   const [plants, setPlants] = useState<IPlant[]>([]);
+
+  const fetchEnviroments = useCallback(async () => {
+    await api
+      .get<IEnviroment[]>(`plants_environments?_sort=title&_order=asc`)
+      .then(result => {
+        setEnviroments([{ key: 'all', title: 'Todos' }, ...result.data]);
+      })
+      .catch(() => {
+        setEnviroments([]);
+      });
+  }, []);
+
+  const fetchPlants = useCallback(async () => {
+    const { data } = await api.get<IPlant[]>(`plants`, {
+      params: {
+        _sort: 'name',
+        _order: 'asc',
+        _page: page,
+        _limit: 8,
+        environments_like:
+          selectedEnviroment !== 'all' ? selectedEnviroment : null,
+      },
+    });
+
+    if (!data) {
+      return;
+    }
+
+    if (page > 1) {
+      setPlants(oldState => [...oldState, ...data]);
+    } else {
+      setPlants(data);
+    }
+
+    setIsLoading(false);
+    setIsLoadingMore(false);
+  }, [page, selectedEnviroment]);
 
   const renderEnviromentSeparator = React.memo(() => {
     return <PlacesListSeparator />;
   });
 
+  const handleSelectEnviroment = useCallback((enviroment: string) => {
+    setPage(1);
+    setIsLoadingMore(false);
+    setIsLoading(true);
+    setSelectedEnviroment(enviroment);
+  }, []);
+
+  const handleLoadMorePlants = useCallback(
+    (distanceFromEnd: number) => {
+      if (distanceFromEnd < 1) {
+        return;
+      }
+      setIsLoadingMore(true);
+      setPage(page + 1);
+    },
+    [page],
+  );
+
   useEffect(() => {
-    async function fetchEnviroments() {
-      await api
-        .get<IEnviroment[]>('plants_environments')
-        .then(result => {
-          setEnviroments([{ key: 'all', title: 'Todos' }, ...result.data]);
-        })
-        .catch(() => {
-          setEnviroments([]);
-        });
-    }
     fetchEnviroments();
-  }, []);
+  }, [fetchEnviroments]);
+
   useEffect(() => {
-    async function fetchPlants() {
-      await api
-        .get<IPlant[]>('plants')
-        .then(result => {
-          setPlants(result.data);
-        })
-        .catch(() => {
-          setPlants([]);
-        });
-    }
     fetchPlants();
-  }, []);
+  }, [fetchPlants]);
+
+  if (isLoading && !isLoadingMore) {
+    return <Loading />;
+  }
 
   return (
     <Container>
@@ -84,7 +130,14 @@ const PlantSelection: React.FC = () => {
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={renderEnviromentSeparator}
           renderItem={({ item }) => {
-            return <EnviromentButton key={item.key} title={item.title} />;
+            return (
+              <EnviromentButton
+                key={item.key}
+                title={item.title}
+                onPress={() => handleSelectEnviroment(item.key)}
+                active={item.key === selectedEnviroment}
+              />
+            );
           }}
           contentContainerStyle={{
             justifyContent: 'center',
@@ -99,14 +152,23 @@ const PlantSelection: React.FC = () => {
       <Plants>
         <PlantsList
           data={[...plants]}
+          keyExtractor={(item, index) => `${item.id}${index}`}
           numColumns={2}
           showsVerticalScrollIndicator={false}
+          onEndReachedThreshold={0.1}
+          onEndReached={({ distanceFromEnd }) => {
+            handleLoadMorePlants(distanceFromEnd);
+          }}
           renderItem={({ item }) => {
             return <PlantCard name={item.name} photo={item.photo} />;
           }}
+          alwaysBounceVertical
           contentContainerStyle={{
             justifyContent: 'center',
           }}
+          ListFooterComponent={
+            isLoadingMore ? <ActivityIndicator color={colors.green} /> : <></>
+          }
         />
       </Plants>
     </Container>

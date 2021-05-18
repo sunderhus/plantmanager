@@ -43,7 +43,7 @@
       "about": "Adapta-se tanto ao sol e sombra, mas prefere ficar num cantinho fresco, sem sol direto. ",
       "waterTips": "Nos dias mais quentes borrife água nas folhas. Regue 3 vezes na semana.",
       "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/3.svg",
-      "environments": ["bedroom"],
+      "environments": ["bedroom","master_bedromm"],
       "frequency": {
         "times": 3,
         "repeatEvery": "week"
