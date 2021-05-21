@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Alert, Text } from 'react-native';
 import EnviromentButton from '../../components/EnviromentButton';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 import PlantCard from '../../components/PlantCard';
+import { useUser } from '../../contexts/user.context';
 import api from '../../services/api';
 import colors from '../../styles/colors';
 import {
@@ -37,6 +38,7 @@ export interface IEnviroment {
 
 const PlantSelection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [blockLoadMore, setBlockLoadMore] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [enviroments, setEnviroments] = useState<IEnviroment[]>([]);
@@ -65,8 +67,8 @@ const PlantSelection: React.FC = () => {
           selectedEnviroment !== 'all' ? selectedEnviroment : null,
       },
     });
-
-    if (!data) {
+    if (!data || data.length === 0) {
+      setBlockLoadMore(true);
       return;
     }
 
@@ -75,7 +77,7 @@ const PlantSelection: React.FC = () => {
     } else {
       setPlants(data);
     }
-
+    setBlockLoadMore(false);
     setIsLoading(false);
     setIsLoadingMore(false);
   }, [page, selectedEnviroment]);
@@ -93,13 +95,19 @@ const PlantSelection: React.FC = () => {
 
   const handleLoadMorePlants = useCallback(
     (distanceFromEnd: number) => {
-      if (distanceFromEnd < 1) {
+      if (distanceFromEnd < 0) {
         return;
       }
+
+      if (blockLoadMore) {
+        return;
+      }
+
       setIsLoadingMore(true);
+
       setPage(page + 1);
     },
-    [page],
+    [blockLoadMore, page],
   );
 
   useEffect(() => {

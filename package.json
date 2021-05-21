@@ -11,6 +11,7 @@
     "server": "json-server --watch --host 192.168.0.21 --port 3333 --delay 1200 db.json"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/core": "^5.15.3",
     "@react-navigation/native": "^5.9.4",

@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useState } from 'react';
-import { Keyboard, Platform } from 'react-native';
+import { Alert, Keyboard, Platform } from 'react-native';
 import Button from '../../components/Button';
+import { UserProvider, useUser } from '../../contexts/user.context';
 import {
   AvoidKeyboard,
   Container,
@@ -16,9 +17,10 @@ import {
 } from './styles';
 
 const UserIdentification: React.FC = () => {
+  const { name, updateName } = useUser();
   const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState(name);
 
   const handleInputChange = useCallback((text: string) => {
     setUserName(text);
@@ -33,10 +35,13 @@ const UserIdentification: React.FC = () => {
   }, []);
 
   const handleNextPage = useCallback(() => {
-    if (userName) {
-      navigation.navigate('Confirmation');
+    if (!userName) {
+      Alert.alert('Me diz como chamar você 😢.');
+      return;
     }
-  }, [navigation, userName]);
+    updateName(userName);
+    navigation.navigate('Confirmation');
+  }, [navigation, updateName, userName]);
 
   return (
     <Container>
