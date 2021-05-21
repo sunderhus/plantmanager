@@ -9,7 +9,7 @@ interface PlantCardProps extends RectButtonProps {
 
 const PlantCard: React.FC<PlantCardProps> = ({ name, photo, ...rest }) => {
   return (
-    <Button>
+    <Button {...rest}>
       <ButtonImage uri={photo} height={100} />
       <ButtonText>{name}</ButtonText>
     </Button>
