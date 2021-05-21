@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Text } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import EnviromentButton from '../../components/EnviromentButton';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 import PlantCard from '../../components/PlantCard';
-import { useUser } from '../../contexts/user.context';
 import api from '../../services/api';
 import colors from '../../styles/colors';
 import {

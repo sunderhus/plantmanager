@@ -3791,6 +3791,11 @@ flatted@^3.1.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.1.1.tgz#c4b489e80096d9df1dfc97c79871aea7c617c469"
   integrity sha512-zAoAQiudy+r5SvnSw3KJy5os/oRJYHzrzja/tBDqrZtNhUw8bt6y8OBzMWcjWr+8liV8Eb6yOhw8WZ7VFZ5ZzA==
 
+flipper-plugin-async-storage@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/flipper-plugin-async-storage/-/flipper-plugin-async-storage-0.0.10.tgz#e3db61ffdf9cddf75036fe7d9a5825f0bdf4c9f5"
+  integrity sha512-fRY5s+A7IQ//POVRKG/Pt+peIqDgPIOD5vkQuYYgFOQRhAjBDuv8333K4P312H2rNOXztJWAv+0dwb4j1W1y0w==
+
 flow-parser@0.*:
   version "0.150.1"
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.150.1.tgz#750dbe738e3b54b7f5f4fc52fd0bc5277a2d587d"
