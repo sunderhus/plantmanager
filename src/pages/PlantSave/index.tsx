@@ -4,7 +4,7 @@ import RCTDateTimePickerNative, {
 import { useRoute } from '@react-navigation/core';
 import { format } from 'date-fns';
 import React, { useCallback, useRef, useState } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import waterDrop from '../../assets/waterdrop.png';
 import Button from '../../components/Button';
 import { usePlant } from '../../contexts/plants.context';
