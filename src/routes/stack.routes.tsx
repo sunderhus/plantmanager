@@ -1,13 +1,11 @@
-import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import colors from '../styles/colors';
-
-import Welcome from '../pages/Welcome';
-import UserIdentification from '../pages/UserIdentification';
+import React from 'react';
 import Confirmation from '../pages/Confirmation';
-import PlantSelection from '../pages/PlantSelection';
 import PlantSave from '../pages/PlantSave';
-import MyPlants from '../pages/MyPlants';
+import UserIdentification from '../pages/UserIdentification';
+import Welcome from '../pages/Welcome';
+import colors from '../styles/colors';
+import BottomRoutes from './bottom.routes';
 
 const Stack = createStackNavigator();
 const { Navigator, Screen } = Stack;
@@ -25,9 +23,9 @@ const StackRoutes: React.FC = () => {
       <Screen name="Welcome" component={Welcome} />
       <Screen name="UserIdentification" component={UserIdentification} />
       <Screen name="Confirmation" component={Confirmation} />
-      <Screen name="PlantSelection" component={PlantSelection} />
+      <Screen name="PlantSelection" component={BottomRoutes} />
       <Screen name="PlantSave" component={PlantSave} />
-      <Screen name="MyPlants" component={MyPlants} />
+      <Screen name="MyPlants" component={BottomRoutes} />
     </Navigator>
   );
 };

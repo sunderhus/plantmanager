@@ -1,5 +1,5 @@
 import { FlatList } from 'react-native';
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { IEnviroment, IPlant } from '.';
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
@@ -10,6 +10,10 @@ export const Container = styled.SafeAreaView`
 `;
 export const QuestionContainer = styled.View`
   padding: 0px 30px;
+`;
+export const HeaderContainer = styled.View`
+  padding: 10px 20px;
+  margin-top: 10px;
 `;
 
 export const Title = styled.Text`

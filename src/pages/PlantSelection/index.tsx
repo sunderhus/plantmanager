@@ -11,6 +11,7 @@ import {
   Container,
   Enviroments,
   EnviromentsList,
+  HeaderContainer,
   PlacesListSeparator,
   Plants,
   PlantsList,
@@ -133,7 +134,9 @@ const PlantSelection: React.FC = () => {
 
   return (
     <Container>
-      <Header />
+      <HeaderContainer>
+        <Header />
+      </HeaderContainer>
       <QuestionContainer>
         <Title>Em qual ambiente</Title>
         <Subtitle>você quer colocar sua planta?</Subtitle>

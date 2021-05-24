@@ -7,7 +7,7 @@ export const Container = styled.SafeAreaView`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  margin-bottom: 20px;
 `;
 
 export const Greeting = styled.Text`
