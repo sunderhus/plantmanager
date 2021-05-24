@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/core';
+import React, { useCallback } from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import wateringImage from '../../assets/watering.png';
 import colors from '../../styles/colors';

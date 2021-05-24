@@ -1,11 +1,11 @@
+import React, { useEffect, useState } from 'react';
 import * as DateFns from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-
-import React, { useEffect, useState } from 'react';
 import waterDrop from '../../assets/waterdrop.png';
 import Header from '../../components/Header';
 import PlantCardSecondary from '../../components/PlantCardSecondary';
 import { usePlant } from '../../contexts/plants.context';
+
 import {
   Container,
   Plants,

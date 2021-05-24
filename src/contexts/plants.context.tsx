@@ -6,7 +6,9 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Alert } from 'react-native';
+import PushNotification from 'react-native-push-notification';
+import { Alert, Platform } from 'react-native';
+import { addSeconds } from 'date-fns';
 
 interface IStoredPlant {
   id: number;
@@ -17,7 +19,7 @@ interface IStoredPlant {
   environments: string[];
   frequency: {
     times: number;
-    repeatEvery: string;
+    repeatEvery: 'day' | 'week';
   };
   notificationTime: Date;
 }
@@ -58,10 +60,42 @@ const PlantProvider: React.FC = ({ children }) => {
     [],
   );
 
+  const scheduleWateringNotification = useCallback((plant: IStoredPlant) => {
+    const nextTime = new Date(plant?.notificationTime);
+    const now = new Date();
+
+    const { times, repeatEvery } = plant.frequency;
+    if (repeatEvery === 'week') {
+      const wateringInterval = Math.trunc(7 / times);
+      nextTime.setDate(now.getDate() + wateringInterval);
+    } else {
+      nextTime.setDate(nextTime.getDate() + 1);
+    }
+
+    const trigger = Math.abs(
+      Math.ceil(now.getTime() - nextTime.getTime()) / 1000,
+    );
+
+    PushNotification.localNotificationSchedule({
+      // Android Only
+      channelId: 'wateringChannel',
+      title: 'Heey, 🌱',
+      bigText: `Está na hora de cuidar da sua ${plant.name}`,
+      repeatTime: trigger,
+      playSound: false,
+      // IOS Only
+      message: `Está na hora de cuidar da sua ${plant.name}`, // (required),
+      // Both
+      date: nextTime,
+      repeatType: Platform.OS === 'ios' ? 'day' : 'time',
+    });
+  }, []);
+
   const savePlant = useCallback(
     async (plant: IStoredPlant): Promise<void> => {
       try {
         const savedPlants = await getPlantsFromStorage();
+        scheduleWateringNotification(plant);
 
         const storedIndex = savedPlants.findIndex(storedPlant => {
           return storedPlant.id === plant.id;
