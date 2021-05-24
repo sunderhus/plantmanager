@@ -59,6 +59,7 @@ export const UserNameInput = styled(TextInput)<UserNameInputProps>`
   margin-top: 50px;
   padding: 10px;
   text-align: center;
+  color: ${colors.body_dark};
 `;
 
 export const FormFooter = styled.View`
