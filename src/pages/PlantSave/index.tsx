@@ -49,13 +49,13 @@ const PlantSave: React.FC = () => {
   const { plant } = route.params as RouteParams;
 
   const handleChangeTime = useCallback(
-    (event: Event, dateTime: Date | undefined) => {
+    (event: Event, dateTime: Date | undefined): void => {
       if (isAndroid) {
         setShowDatePicker(false);
       }
 
       if (event.type !== 'set' || !dateTime) {
-        return Alert;
+        return;
       }
 
       setSelectedDateTime(dateTime);
