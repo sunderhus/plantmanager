@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import EnviromentButton from '../../components/EnviromentButton';
@@ -43,6 +44,8 @@ const PlantSelection: React.FC = () => {
   const [enviroments, setEnviroments] = useState<IEnviroment[]>([]);
   const [selectedEnviroment, setSelectedEnviroment] = useState<string>('all');
   const [plants, setPlants] = useState<IPlant[]>([]);
+
+  const navigator = useNavigation();
 
   const fetchEnviroments = useCallback(async () => {
     await api
@@ -109,6 +112,13 @@ const PlantSelection: React.FC = () => {
     [blockLoadMore, page],
   );
 
+  const handlePlantSelection = useCallback(
+    (plant: IPlant) => {
+      navigator.navigate('PlantSave', { plant });
+    },
+    [navigator],
+  );
+
   useEffect(() => {
     fetchEnviroments();
   }, [fetchEnviroments]);
@@ -133,7 +143,7 @@ const PlantSelection: React.FC = () => {
         <EnviromentsList
           data={[...enviroments]}
           horizontal
-          keyExtractor={item => item.key}
+          keyExtractor={item => String(item.key)}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={renderEnviromentSeparator}
           renderItem={({ item }) => {
@@ -167,14 +177,24 @@ const PlantSelection: React.FC = () => {
             handleLoadMorePlants(distanceFromEnd);
           }}
           renderItem={({ item }) => {
-            return <PlantCard name={item.name} photo={item.photo} />;
+            return (
+              <PlantCard
+                name={item.name}
+                photo={item.photo}
+                onPress={() => handlePlantSelection(item)}
+              />
+            );
           }}
           alwaysBounceVertical
           contentContainerStyle={{
             justifyContent: 'center',
           }}
           ListFooterComponent={
-            isLoadingMore ? <ActivityIndicator color={colors.green} /> : <></>
+            isLoadingMore && !blockLoadMore ? (
+              <ActivityIndicator color={colors.green} />
+            ) : (
+              <></>
+            )
           }
         />
       </Plants>
