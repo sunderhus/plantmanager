@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { RectButtonProps } from 'react-native-gesture-handler';
 import { Button, ButtonImage, ButtonText } from './styles';
 
@@ -8,9 +8,13 @@ interface PlantCardProps extends RectButtonProps {
 }
 
 const PlantCard: React.FC<PlantCardProps> = ({ name, photo, ...rest }) => {
+  const MemoButtonImage = useMemo(() => {
+    return <ButtonImage uri={photo} height={80} width={80} />;
+  }, [photo]);
+
   return (
     <Button {...rest}>
-      <ButtonImage uri={photo} height={100} />
+      {MemoButtonImage}
       <ButtonText>{name}</ButtonText>
     </Button>
   );

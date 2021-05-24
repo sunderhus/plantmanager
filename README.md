@@ -1,6 +1,5 @@
 # Plant Manager App - React Native⚛ + Typescript + Styled components
 
-
 <hr>
 
 <h1 align="center">
@@ -34,11 +33,13 @@
 </p>
 
 ## 🚀 Required
+
 [Node](https://nodejs.org/en/download/)
 [Yarn](https://yarnpkg.com/)
 [Android Studio](https://developer.android.com/studio)
 
 ## 💻 Project
+
 <p>App developed on React Native path  of NLW#5. This app will help people to take care of nature, in a easiest way 🍃.</p>
 
 <!-- <br>
@@ -55,13 +56,12 @@ If you are looking for this project download or seeing online, try this options 
 
 You can find the base layout here 👉 [Figma - Plant Manager Mobile](https://www.figma.com/file/68psTCsgiPxxE1zyNHT6Ur/PlantManager-Copy?node-id=0%3A1).
 
-
 ## 🧠 How i moved this project to the next level
 
 [ ] Converted from ReactNative to ReactJS . <br>
 [ ] Creating workflow with Github hooks to generated a Android APK artefact.<br>
-✅ Adding  ESLint, Prettier, Git commit lint.<br>
-[ ] Adding  styled-components and navigation.<br>
+✅ Adding ESLint, Prettier, Git commit lint.<br>
+[ ] Adding styled-components and navigation.<br>
 [ ] Creating custom hooks that can be reusable on Web and Mobile.<br>
 [ ] Adding Async Storage.<br>
 [ ] Share the learning with others.<br>
@@ -73,6 +73,7 @@ You can find the base layout here 👉 [Figma - Plant Manager Mobile](https://ww
 # Clone repository
 $ git clone https://github.com/sunderhus/plantmanager
 ```
+
 ### :iphone: Run
 
 ```bash
@@ -95,7 +96,4 @@ This project is under MIT License. check-out this file here 👉 [LICENSE](LICEN
 
 ---
 
-
 Made by Matheus Sunderhus : [Linkedin!](https://www.linkedin.com/in/matheus-sunderhus/)
-
-

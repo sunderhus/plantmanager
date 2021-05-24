@@ -1,15 +1,15 @@
 {
   "plants_water_frequencies": [
-    {"key": "day", "title": "Todos os dias"},
-    {"key": "week", "title": "A cada semana"}
+    { "key": "day", "title": "Todos os dias" },
+    { "key": "week", "title": "A cada semana" }
   ],
 
   "plants_environments": [
-    {"key": "living_room", "title": "Sala"},
-    {"key": "bedroom", "title": "Quarto"},
-    {"key": "kitchen", "title": "Cozinha"},
-    {"key": "bathroom", "title": "Banheiro"},
-    {"key": "master_bedromm", "title": "Suite"}
+    { "key": "living_room", "title": "Sala" },
+    { "key": "bedroom", "title": "Quarto" },
+    { "key": "kitchen", "title": "Cozinha" },
+    { "key": "bathroom", "title": "Banheiro" },
+    { "key": "master_bedromm", "title": "Suite" }
   ],
 
   "plants": [
@@ -43,7 +43,7 @@
       "about": "Adapta-se tanto ao sol e sombra, mas prefere ficar num cantinho fresco, sem sol direto. ",
       "waterTips": "Nos dias mais quentes borrife água nas folhas. Regue 3 vezes na semana.",
       "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/3.svg",
-      "environments": ["bedroom","master_bedromm"],
+      "environments": ["bedroom", "master_bedromm"],
       "frequency": {
         "times": 3,
         "repeatEvery": "week"

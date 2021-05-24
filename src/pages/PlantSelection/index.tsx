@@ -48,15 +48,11 @@ const PlantSelection: React.FC = () => {
 
   const navigator = useNavigation();
 
-  const fetchEnviroments = useCallback(async () => {
-    await api
-      .get<IEnviroment[]>(`plants_environments?_sort=title&_order=asc`)
-      .then(result => {
-        setEnviroments([{ key: 'all', title: 'Todos' }, ...result.data]);
-      })
-      .catch(() => {
-        setEnviroments([]);
-      });
+  const fetchEnviroments = useCallback(async (): Promise<IEnviroment[]> => {
+    const { data } = await api.get<IEnviroment[]>(
+      `plants_environments?_sort=title&_order=asc`,
+    );
+    return data;
   }, []);
 
   const fetchPlants = useCallback(async () => {
@@ -70,19 +66,8 @@ const PlantSelection: React.FC = () => {
           selectedEnviroment !== 'all' ? selectedEnviroment : null,
       },
     });
-    if (!data || data.length === 0) {
-      setBlockLoadMore(true);
-      return;
-    }
 
-    if (page > 1) {
-      setPlants(oldState => [...oldState, ...data]);
-    } else {
-      setPlants(data);
-    }
-    setBlockLoadMore(false);
-    setIsLoading(false);
-    setIsLoadingMore(false);
+    return data;
   }, [page, selectedEnviroment]);
 
   const renderEnviromentSeparator = React.memo(() => {
@@ -97,20 +82,19 @@ const PlantSelection: React.FC = () => {
   }, []);
 
   const handleLoadMorePlants = useCallback(
-    (distanceFromEnd: number) => {
+    async (distanceFromEnd: number) => {
       if (distanceFromEnd < 0) {
         return;
       }
 
-      if (blockLoadMore) {
+      if (blockLoadMore || isLoadingMore) {
         return;
       }
 
       setIsLoadingMore(true);
-
       setPage(page + 1);
     },
-    [blockLoadMore, page],
+    [blockLoadMore, isLoadingMore, page],
   );
 
   const handlePlantSelection = useCallback(
@@ -121,12 +105,45 @@ const PlantSelection: React.FC = () => {
   );
 
   useEffect(() => {
-    fetchEnviroments();
+    let cancel = false;
+
+    fetchEnviroments().then(storedEnviroments => {
+      if (cancel) return;
+      setEnviroments([{ key: 'all', title: 'Todos' }, ...storedEnviroments]);
+    });
+
+    return () => {
+      cancel = true;
+    };
   }, [fetchEnviroments]);
 
   useEffect(() => {
-    fetchPlants();
-  }, [fetchPlants]);
+    let cancel = false;
+
+    fetchPlants().then(data => {
+      if (cancel) return;
+
+      if (!data || data.length === 0) {
+        setBlockLoadMore(true);
+        return;
+      }
+
+      if (page > 1) {
+        setPlants(oldState => [...oldState, ...data]);
+      } else {
+        setPlants(data);
+      }
+      setBlockLoadMore(false);
+      setIsLoading(false);
+      setIsLoadingMore(false);
+    });
+
+    return () => {
+      cancel = true;
+    };
+  }, [fetchPlants, page]);
+
+  useEffect(() => {}, []);
 
   if (isLoading && !isLoadingMore) {
     return <Loading />;

@@ -43,14 +43,20 @@ const PlantProvider: React.FC = ({ children }) => {
     }
   }, []);
 
-  function sortPlantsByNotificationTime(unsortedPlants: IStoredPlant[]) {
-    const result = unsortedPlants.sort((a, b) => {
-      const plantA = a.notificationTime;
-      const plantB = b.notificationTime;
-      return new Date(plantA).getTime() - new Date(plantB).getTime();
-    });
-    return result;
-  }
+  const sortPlantsByNotificationTime = useCallback(
+    (unsortedPlants: IStoredPlant[]) => {
+      if (!!unsortedPlants && unsortedPlants.length > 1) {
+        const result = unsortedPlants.sort((a, b) => {
+          const plantA = a.notificationTime;
+          const plantB = b.notificationTime;
+          return new Date(plantA).getTime() - new Date(plantB).getTime();
+        });
+        return result;
+      }
+      return unsortedPlants;
+    },
+    [],
+  );
 
   const savePlant = useCallback(
     async (plant: IStoredPlant): Promise<void> => {
@@ -88,7 +94,7 @@ const PlantProvider: React.FC = ({ children }) => {
         Alert.alert('Erro ao salvar a planta😢.');
       }
     },
-    [getPlantsFromStorage],
+    [getPlantsFromStorage, sortPlantsByNotificationTime],
   );
 
   const removePlant = useCallback(
@@ -99,7 +105,7 @@ const PlantProvider: React.FC = ({ children }) => {
 
         await AsyncStorage.setItem(
           '@plantManager:plants',
-          JSON.stringify([...filteredPlants]),
+          JSON.stringify(filteredPlants),
         );
         setPlants(filteredPlants);
       } catch {
@@ -110,12 +116,14 @@ const PlantProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    async function getPlants() {
-      const savedPlants = await getPlantsFromStorage();
-
+    let cancel = false;
+    getPlantsFromStorage().then(savedPlants => {
+      if (cancel) return;
       setPlants(savedPlants);
-    }
-    getPlants();
+    });
+    return () => {
+      cancel = true;
+    };
   }, [getPlantsFromStorage]);
 
   return (

@@ -6,7 +6,6 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import RNAsyncStorageFlipper from 'rn-async-storage-flipper';
 
 interface IUserContext {
   name: string;
@@ -35,7 +34,6 @@ const UserProvider: React.FC = ({ children }) => {
       }
     }
     fetchName();
-    RNAsyncStorageFlipper(AsyncStorage);
   }, []);
 
   return (

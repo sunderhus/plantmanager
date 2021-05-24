@@ -2,9 +2,9 @@ import RCTDateTimePickerNative, {
   Event,
 } from '@react-native-community/datetimepicker';
 import { useNavigation, useRoute } from '@react-navigation/core';
-import { format } from 'date-fns';
-import React, { useCallback, useRef, useState } from 'react';
-import { Platform } from 'react-native';
+import { format, startOfDay } from 'date-fns';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Platform, ScrollView } from 'react-native';
 import waterDrop from '../../assets/waterdrop.png';
 import Button from '../../components/Button';
 import { usePlant } from '../../contexts/plants.context';
@@ -40,10 +40,8 @@ interface RouteParams {
 }
 const PlantSave: React.FC = () => {
   const isAndroid = useRef(Platform.OS === 'android');
-  const [selectedDateTime, setSelectedDateTime] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(() => {
-    return Platform.OS === 'android';
-  });
+  const [selectedDateTime, setSelectedDateTime] = useState<Date>(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const { savePlant } = usePlant();
   const navigator = useNavigation();
   const route = useRoute();
@@ -55,11 +53,13 @@ const PlantSave: React.FC = () => {
         setShowDatePicker(false);
       }
 
-      if (event.type !== 'set' || !dateTime) {
+      if (event.type !== 'set' || dateTime === undefined) {
         return;
       }
 
-      setSelectedDateTime(dateTime);
+      console.log(new Date(dateTime));
+
+      setSelectedDateTime(new Date(dateTime));
     },
     [],
   );
@@ -68,8 +68,8 @@ const PlantSave: React.FC = () => {
     setShowDatePicker(true);
   }, []);
 
-  const handleSavePlant = useCallback(() => {
-    savePlant({ ...plant, notificationTime: selectedDateTime });
+  const handleSavePlant = useCallback(async () => {
+    await savePlant({ ...plant, notificationTime: new Date(selectedDateTime) });
 
     navigator.navigate('Confirmation', {
       title: 'Tudo certo',
@@ -81,43 +81,48 @@ const PlantSave: React.FC = () => {
     } as ConfirmationParams);
   }, [navigator, plant, savePlant, selectedDateTime]);
 
+  const MemoPlantImage = useMemo(() => {
+    return <PlantImage uri={plant.photo} height={150} width={150} />;
+  }, [plant.photo]);
+
   return (
     <Container>
-      <PlantInfo>
-        <PlantImage uri={plant.photo} height={150} width={150} />
-        <PlantName>{plant.name}</PlantName>
-        <PlantAbout>{plant.about}</PlantAbout>
-      </PlantInfo>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <PlantInfo>
+          {MemoPlantImage}
+          <PlantName>{plant.name}</PlantName>
+          <PlantAbout>{plant.about}</PlantAbout>
+        </PlantInfo>
 
-      <Controlls>
-        <TipContainer>
-          <WaterTip source={waterDrop} />
-          <TipText>{plant.waterTips}</TipText>
-        </TipContainer>
+        <Controlls>
+          <TipContainer>
+            <WaterTip source={waterDrop} />
+            <TipText>{plant.waterTips}</TipText>
+          </TipContainer>
 
-        <AlertLabel>Escolha o melhor horário para ser lembrado:</AlertLabel>
-        {showDatePicker && (
-          <RCTDateTimePickerNative
-            is24Hour
-            accessibilityHint="Selecione o horário do lembrete"
-            textColor="red"
-            value={selectedDateTime}
-            mode="time"
-            display="spinner"
-            onChange={handleChangeTime}
-          />
-        )}
+          <AlertLabel>Escolha o melhor horário para ser lembrado:</AlertLabel>
+          {showDatePicker && (
+            <RCTDateTimePickerNative
+              dateFormat="longdate"
+              accessibilityHint="Selecione o horário do lembrete"
+              value={selectedDateTime}
+              mode="time"
+              display="spinner"
+              onChange={handleChangeTime}
+            />
+          )}
 
-        {isAndroid && (
-          <DateTimeButton onPress={handleOpenDateTimePicker}>
-            <DateTimeText>
-              {`Mudar horário ${format(selectedDateTime, 'HH:mm')}`}{' '}
-            </DateTimeText>
-          </DateTimeButton>
-        )}
+          {isAndroid && (
+            <DateTimeButton onPress={handleOpenDateTimePicker}>
+              <DateTimeText>
+                {`Mudar horário ${format(selectedDateTime, 'HH:mm')}`}
+              </DateTimeText>
+            </DateTimeButton>
+          )}
 
-        <Button title="Cadastrar planta" onPress={handleSavePlant} />
-      </Controlls>
+          <Button title="Cadastrar planta" onPress={handleSavePlant} />
+        </Controlls>
+      </ScrollView>
     </Container>
   );
 };
