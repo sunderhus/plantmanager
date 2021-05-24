@@ -2,7 +2,7 @@ import RCTDateTimePickerNative, {
   Event,
 } from '@react-native-community/datetimepicker';
 import { useNavigation, useRoute } from '@react-navigation/core';
-import { format, startOfDay } from 'date-fns';
+import { format } from 'date-fns';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Platform, ScrollView } from 'react-native';
 import waterDrop from '../../assets/waterdrop.png';
@@ -56,8 +56,6 @@ const PlantSave: React.FC = () => {
       if (event.type !== 'set' || dateTime === undefined) {
         return;
       }
-
-      console.log(new Date(dateTime));
 
       setSelectedDateTime(new Date(dateTime));
     },
