@@ -2,7 +2,8 @@ import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useState } from 'react';
 import { Alert, Keyboard, Platform } from 'react-native';
 import Button from '../../components/Button';
-import { UserProvider, useUser } from '../../contexts/user.context';
+import { useUser } from '../../contexts/user.context';
+import { ConfirmationParams } from '../Confirmation';
 import {
   AvoidKeyboard,
   Container,
@@ -40,7 +41,14 @@ const UserIdentification: React.FC = () => {
       return;
     }
     updateName(userName);
-    navigation.navigate('Confirmation');
+    navigation.navigate('Confirmation', {
+      title: 'Prontinho',
+      subtitle:
+        'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+      buttonText: 'Começar',
+      icon: 'smile',
+      nextScreen: 'PlantSelection',
+    } as ConfirmationParams);
   }, [navigation, updateName, userName]);
 
   return (
@@ -50,7 +58,7 @@ const UserIdentification: React.FC = () => {
           <Content>
             <Form>
               <FormHeader>
-                <Emoji>{userName ? '😄' : '🙂'}</Emoji>
+                <Emoji>{userName ? '🌳' : '🌱'}</Emoji>
                 <Question>
                   Como podemos {'\n'}
                   chamar você?

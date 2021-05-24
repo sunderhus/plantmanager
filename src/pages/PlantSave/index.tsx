@@ -1,13 +1,14 @@
 import RCTDateTimePickerNative, {
   Event,
 } from '@react-native-community/datetimepicker';
-import { useRoute } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { format } from 'date-fns';
 import React, { useCallback, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import waterDrop from '../../assets/waterdrop.png';
 import Button from '../../components/Button';
 import { usePlant } from '../../contexts/plants.context';
+import { ConfirmationParams } from '../Confirmation';
 import {
   AlertLabel,
   Container,
@@ -44,7 +45,7 @@ const PlantSave: React.FC = () => {
     return Platform.OS === 'android';
   });
   const { savePlant } = usePlant();
-
+  const navigator = useNavigation();
   const route = useRoute();
   const { plant } = route.params as RouteParams;
 
@@ -69,7 +70,16 @@ const PlantSave: React.FC = () => {
 
   const handleSavePlant = useCallback(() => {
     savePlant({ ...plant, notificationTime: selectedDateTime });
-  }, [plant, savePlant, selectedDateTime]);
+
+    navigator.navigate('Confirmation', {
+      title: 'Tudo certo',
+      subtitle:
+        'Fique tranquilo, sempre iremos lembrar você de cuidar da sua plantinha com muito cuidado.',
+      icon: 'hug',
+      nextScreen: 'MyPlants',
+      buttonText: 'Muito obrigado',
+    } as ConfirmationParams);
+  }, [navigator, plant, savePlant, selectedDateTime]);
 
   return (
     <Container>
