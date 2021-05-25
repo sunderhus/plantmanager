@@ -6,9 +6,8 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import PushNotification from 'react-native-push-notification';
 import { Alert, Platform } from 'react-native';
-import { addSeconds } from 'date-fns';
+import PushNotification from 'react-native-push-notification';
 
 interface IStoredPlant {
   id: number;
@@ -128,7 +127,11 @@ const PlantProvider: React.FC = ({ children }) => {
         Alert.alert('Erro ao salvar a planta😢.');
       }
     },
-    [getPlantsFromStorage, sortPlantsByNotificationTime],
+    [
+      getPlantsFromStorage,
+      scheduleWateringNotification,
+      sortPlantsByNotificationTime,
+    ],
   );
 
   const removePlant = useCallback(

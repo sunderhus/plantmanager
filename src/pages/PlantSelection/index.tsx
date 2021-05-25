@@ -143,8 +143,6 @@ const PlantSelection: React.FC = () => {
     };
   }, [fetchPlants, page]);
 
-  useEffect(() => {}, []);
-
   if (isLoading && !isLoadingMore) {
     return <Loading />;
   }

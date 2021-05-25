@@ -34,7 +34,7 @@ interface RouteParams {
     environments: string[];
     frequency: {
       times: number;
-      repeatEvery: string;
+      repeatEvery: 'day' | 'week';
     };
   };
 }
