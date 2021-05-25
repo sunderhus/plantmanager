@@ -14,6 +14,7 @@ const App: React.FC = () => {
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
       created => {
+        // eslint-disable-next-line no-console
         console.log(`createChannel returned '${created}'`);
       }, // (optional) callback returns whether the channel was created, false means it already existed.
     );
