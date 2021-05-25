@@ -72,6 +72,9 @@ You can find the base layout here 👉 [Figma - Plant Manager Mobile](https://ww
 ```bash
 # Clone repository
 $ git clone https://github.com/sunderhus/plantmanager
+
+# Create your .env file using
+In order to have a valid .env file, create one using as base file .env.example, <b>populating all variables according</b>
 ```
 
 ### :iphone: Run

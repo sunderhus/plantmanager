@@ -44,6 +44,7 @@ buck-out/
 #enviroments
 .env
 .env.*
+!.env.example
 
 # fastlane
 #
