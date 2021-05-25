@@ -26,6 +26,8 @@ jobs:
       - name: Build Android Release
         env:
           API_BASE_URL: ${{secrets.API_BASE_URL}}
+          API_PORT: ${{secrets.API_PORT}}
+          API_TOKEN: ${{secrets.API_TOKEN}}
         run: cd android && chmod +x ./gradlew && ./gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1

@@ -1,11 +1,13 @@
-import React, { useCallback } from 'react';
 import { useNavigation } from '@react-navigation/core';
-import { API_BASE_URL } from 'react-native-dotenv';
+import React, { useCallback } from 'react';
+import { Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import wateringImage from '../../assets/watering.png';
 import colors from '../../styles/colors';
 import {
   Container,
+  LinkedinLink,
+  LinkedinLinkText,
   NextPageButton,
   SubTitle,
   Title,
@@ -19,6 +21,9 @@ const Welcome: React.FC = () => {
     navigation.navigate('UserIdentification');
   }, [navigation]);
 
+  const handleGoToLinkedin = useCallback(() => {
+    Linking.openURL('https://www.linkedin.com/in/matheus-sunderhus/');
+  }, []);
   return (
     <Container>
       <Title>
@@ -31,10 +36,12 @@ const Welcome: React.FC = () => {
         sempre que precisar.
       </SubTitle>
 
-      <SubTitle>{API_BASE_URL}</SubTitle>
       <NextPageButton activeOpacity={0.7} onPress={handleNextPage}>
         <Icon name="chevron-right" color={colors.white} size={24} />
       </NextPageButton>
+      <LinkedinLink onPress={handleGoToLinkedin}>
+        <LinkedinLinkText>Linkedin - Matheus Sunderhus</LinkedinLinkText>
+      </LinkedinLink>
     </Container>
   );
 };

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
 
@@ -41,4 +42,12 @@ export const NextPageButton = styled.TouchableOpacity`
   margin-bottom: 10px;
   height: 56px;
   min-width: 56px;
+`;
+export const LinkedinLink = styled(TouchableOpacity)`
+  text-align: center;
+`;
+
+export const LinkedinLinkText = styled.Text`
+  font-family: ${fonts.family.Jost.Bold};
+  color: ${colors.green_dark};
 `;
