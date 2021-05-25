@@ -59,12 +59,13 @@ You can find the base layout here 👉 [Figma - Plant Manager Mobile](https://ww
 ## 🧠 How i moved this project to the next level
 
 [ ] Converted from ReactNative to ReactJS . <br>
-[ ] Creating workflow with Github hooks to generated a Android APK artefact.<br>
+[ ] Use Github secrets to populate enviroment variables. <br>
+✅ Creating workflow with Github hooks to generated a Android APK artefact.<br>
 ✅ Adding ESLint, Prettier, Git commit lint.<br>
-[ ] Adding styled-components and navigation.<br>
-[ ] Creating custom hooks that can be reusable on Web and Mobile.<br>
-[ ] Adding Async Storage.<br>
-[ ] Share the learning with others.<br>
+✅ Adding styled-components and navigation.<br>
+✅ Creating custom hooks that can be reusable on Web and Mobile.<br>
+✅ Adding Async Storage.<br>
+✅ Share the learning with others.<br>
 ✅ Stay sharp on both platforms.<br>
 
 ## :construction_worker: How to execute

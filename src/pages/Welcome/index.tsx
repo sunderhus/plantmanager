@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { API_BASE_URL, API_PORT, API_TOKEN } from 'react-native-dotenv';
 import { useNavigation } from '@react-navigation/core';
+import { API_BASE_URL } from 'react-native-dotenv';
 import Icon from 'react-native-vector-icons/Entypo';
 import wateringImage from '../../assets/watering.png';
 import colors from '../../styles/colors';
@@ -31,9 +31,7 @@ const Welcome: React.FC = () => {
         sempre que precisar.
       </SubTitle>
 
-      <SubTitle>
-        {API_BASE_URL}:{API_PORT}-{API_TOKEN}
-      </SubTitle>
+      <SubTitle>{API_BASE_URL}</SubTitle>
       <NextPageButton activeOpacity={0.7} onPress={handleNextPage}>
         <Icon name="chevron-right" color={colors.white} size={24} />
       </NextPageButton>
